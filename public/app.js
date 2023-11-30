@@ -1,6 +1,5 @@
-// nebula.js
 
-import * as THREE from './three.module.js';
+import * as THREE from '../../three.module.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Set up the scene
