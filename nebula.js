@@ -1,7 +1,6 @@
 
 import * as THREE from './three.module.js';
 
-document.addEventListener('DOMContentLoaded', () => {
   // Set up the scene
   const scene = new THREE.Scene();
 
@@ -53,4 +52,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Start the animation loop
   animate();
-});
