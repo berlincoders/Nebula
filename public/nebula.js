@@ -1,72 +1,54 @@
-import * as THREE from '../three.module.js';
+// nebula.js
 
-// Set up the scene
-const scene = new THREE.Scene();
+// Wait for the DOM to be ready before executing the script
+document.addEventListener("DOMContentLoaded", function () {
+  // Create a scene
+  const scene = new THREE.Scene();
 
-// setup the camer
-const canvasWidth = 800; // Adjust the canvas width as needed
-const canvasHeight = 600; // Adjust the canvas height as needed
+  // Create a camera
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
 
-const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-camera.aspect = canvasWidth / canvasHeight;
-camera.updateProjectionMatrix();
+  // Create a WebGLRenderer
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
-// Set up the renderer
-let renderer;
-if (typeof document !== 'undefined') {
-  // Check if running in a browser environment
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize(canvasWidth, canvasHeight);
+  // Append the renderer to the DOM
   document.body.appendChild(renderer.domElement);
-}
 
-// Create an irregular sphere
-const geometry = new THREE.BufferGeometry(); // Use BufferGeometry
-const vertices = [];
-const radius = 2;
-const detail = 128;
+  // Create a sphere geometry
+  const geometry = new THREE.SphereGeometry(5, 32, 32);
 
-for (let i = 0; i <= detail; i++) {
-  const phi = (i / detail) * Math.PI;
-  for (let j = 0; j <= detail; j++) {
-    const theta = (j / detail) * Math.PI * 2;
+  // Create a basic material with color
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 
-    const x = radius * Math.sin(phi) * Math.cos(theta);
-    const y = radius * Math.sin(phi) * Math.sin(theta);
-    const z = radius * Math.cos(phi);
+  // Create a mesh by combining the geometry and material
+  const sphere = new THREE.Mesh(geometry, material);
 
-    vertices.push(
-      x + (Math.random() - 0.5) * 2,
-      y + (Math.random() - 0.5) * 2,
-      z + (Math.random() - 0.5) * 2
-    );
-  }
-}
+  // Add the sphere to the scene
+  scene.add(sphere);
 
-geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  // Position the camera
+  camera.position.z = 15;
 
-const material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
-const sphere = new THREE.Mesh(geometry, material);
-scene.add(sphere);
-
-// Add an animation loop
-const animate = () => {
-  if (typeof requestAnimationFrame === 'undefined') {
-    // Fallback for Node.js environment
-    setTimeout(animate, 16); // Aim for 60 frames per second
-  } else {
+  // Create an animation loop
+  const animate = function () {
     requestAnimationFrame(animate);
-  }
 
-  // Rotate the sphere randomly
-  sphere.rotation.x += 0.005 * (Math.random() - 0.5);
-  sphere.rotation.y += 0.005 * (Math.random() - 0.5);
+    // Rotate the sphere
+    sphere.rotation.x += 0.01;
+    sphere.rotation.y += 0.01;
 
-  // Render the scene
-  if (renderer) {
+    // Render the scene with the camera
     renderer.render(scene, camera);
-  }
-};
+  };
 
-// Start the animation loop
-animate();
+  // Start the animation loop
+  animate();
+});
+
+// Note: This example uses the THREE.js library. Make sure to include it in your HTML file.
