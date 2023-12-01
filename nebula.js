@@ -5,8 +5,14 @@ import * as THREE from './three.module.js';
   const scene = new THREE.Scene();
 
   // Set up the camera
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
+  //const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  //camera.position.z = 5;
+
+  // We Do not  like windows 
+  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
 
   // Set up the renderer
   const renderer = new THREE.WebGLRenderer();
