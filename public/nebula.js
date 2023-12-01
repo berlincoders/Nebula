@@ -1,4 +1,4 @@
-import * as THREE from './three.module.js';
+import * as THREE from '../three.module.js';
 
 // Set up the scene
 const scene = new THREE.Scene();
@@ -70,4 +70,3 @@ const animate = () => {
 
 // Start the animation loop
 animate();
-
