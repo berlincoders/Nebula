@@ -2,7 +2,7 @@
   "name": "nebula",
   "version": "1.0.0",
   "description": "",
-  "main": "nebula.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
