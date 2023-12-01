@@ -3,7 +3,7 @@ import * as THREE from './three.module.js';
 // Set up the scene
 const scene = new THREE.Scene();
 
-// setup the camera
+// setup the camer
 const canvasWidth = 800; // Adjust the canvas width as needed
 const canvasHeight = 600; // Adjust the canvas height as needed
 
@@ -12,9 +12,13 @@ camera.aspect = canvasWidth / canvasHeight;
 camera.updateProjectionMatrix();
 
 // Set up the renderer
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(canvasWidth, canvasHeight);
-document.body.appendChild(renderer.domElement);
+let renderer;
+if (typeof document !== 'undefined') {
+  // Check if running in a browser environment
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(canvasWidth, canvasHeight);
+  document.body.appendChild(renderer.domElement);
+}
 
 // Create an irregular sphere
 const geometry = new THREE.BufferGeometry(); // Use BufferGeometry
@@ -54,8 +58,11 @@ const animate = () => {
   sphere.rotation.y += 0.005 * (Math.random() - 0.5);
 
   // Render the scene
-  renderer.render(scene, camera);
+  if (renderer) {
+    renderer.render(scene, camera);
+  }
 };
 
 // Start the animation loop
 animate();
+
