@@ -51,7 +51,12 @@ scene.add(sphere);
 
 // Add an animation loop
 const animate = () => {
-  requestAnimationFrame(animate);
+  if (typeof requestAnimationFrame === 'undefined') {
+    // Fallback for Node.js environment
+    setTimeout(animate, 16); // Aim for 60 frames per second
+  } else {
+    requestAnimationFrame(animate);
+  }
 
   // Rotate the sphere randomly
   sphere.rotation.x += 0.005 * (Math.random() - 0.5);
